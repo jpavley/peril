@@ -10,12 +10,6 @@ import Foundation
 
 // enumerations
 
-enum Location: String {
-    case livingroom = "livingroom"
-    case garden = "garden"
-    case attic = "attic"
-}
-
 enum Direction: String {
     case upstairs = "upstairs"
     case downstairs = "downstairs"
@@ -40,13 +34,13 @@ enum Command: String {
 // structures
 
 struct Node {
-    var location: Location
+    var location: String
     var description: String
 }
 
 struct Edge {
-    var orgin: Location
-    var destination: Location
+    var orgin: String
+    var destination: String
     var direciton: Direction
     var path: Route
 }
@@ -57,7 +51,7 @@ struct Object {
 }
 
 struct Player {
-    var location: Location
+    var location: String
     var objects: [Object]
 }
 
@@ -70,7 +64,7 @@ struct Room {
 // classes
 
 class Game {
-    var player: Player = Player(location: .livingroom, objects: [Object]())
+    var player: Player = Player(location: "living room", objects: [Object]())
     var world: [Room] = []
     
     func describeLocation() -> String? {
@@ -126,14 +120,14 @@ class Game {
 func main() {
     let game = Game()
     
-    let livingroomNode = Node(location: .livingroom, description: "You are in the living-room. A wizard is snorning loudly on the couch.")
-    let gardenNode = Node(location: .garden, description: "You are in a beautiful garden. There is a well in front of you.")
-    let atticNode = Node(location: .attic, description: "You are in the attic. There is a giant welding a torch in the corner.")
+    let livingroomNode = Node(location: "living room", description: "You are in the living room. A wizard is snorning loudly on the couch.")
+    let gardenNode = Node(location: "garden", description: "You are in a beautiful garden. There is a well in front of you.")
+    let atticNode = Node(location: "attic", description: "You are in the attic. There is a giant welding a torch in the corner.")
     
-    let livingroomEdge1 = Edge(orgin: .livingroom, destination: .garden, direciton: .west, path: .door)
-    let livingroomEdge2 = Edge(orgin: .livingroom, destination: .attic, direciton: .upstairs, path: .ladder)
-    let gardenEdge = Edge(orgin: .garden, destination: .livingroom, direciton: .east, path: .door)
-    let atticEdge = Edge(orgin: .attic, destination: .livingroom, direciton: .downstairs, path: .ladder)
+    let livingroomEdge1 = Edge(orgin: "living room", destination: "garden", direciton: .west, path: .door)
+    let livingroomEdge2 = Edge(orgin: "living room", destination: "attic", direciton: .upstairs, path: .ladder)
+    let gardenEdge = Edge(orgin: "garden", destination: "living room", direciton: .east, path: .door)
+    let atticEdge = Edge(orgin: "attic", destination: "living room", direciton: .downstairs, path: .ladder)
     
     let whiskeyObject = Object(description: "bottle", position: "floor")
     let bucketObject = Object(description: "bucket", position: "table")
