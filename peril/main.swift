@@ -141,7 +141,7 @@ class Game {
         var result = "You can't pick that up"
         
         if let room = playerRoom() {
-            for object in room.objects.enumerated() {
+            for object in room.objects {
                 if userInput == object.description {
                     player.objects.append(object)
                     result = "You pickup the \(userInput)"
