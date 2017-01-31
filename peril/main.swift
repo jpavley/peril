@@ -29,6 +29,7 @@ enum Command: String {
     case walk = "walk"
     case pickup = "pickup"
     case inventory = "inventory"
+    case quit = "quit"
 }
 
 // structures
@@ -113,6 +114,24 @@ class Game {
         result.append(describeObjects()!)
         return result
     }
+    
+    func inventory() -> String {
+        var result = "In your pocket you found: "
+        if player.objects.count == 0 {
+            result.append("nothing")
+        } else {
+            for object in player.objects {
+                result.append(object.description)
+                result.append(" ")
+            }
+        }
+        return result
+    }
+    
+    func pickup(userInput: String) -> String {
+        let result = "You picked up the \(userInput)"
+        return result
+    }
 }
 
 // main
@@ -146,7 +165,39 @@ func main() {
     print("Welcome to the Peril. Enter at your risk.")
     print(" ")
     
-    print(game.look())
+    print("Enter a command: ")
+    
+    var gameOver = false
+    
+    while !gameOver {
+        if let userInput = readLine() {
+            
+            let userCommands = userInput.components(separatedBy: " ")
+            
+            switch userCommands[0] {
+                
+            case Command.look.rawValue:
+                print(game.look())
+                
+            case Command.quit.rawValue:
+                gameOver = true
+                
+            case Command.inventory.rawValue:
+                print(game.inventory())
+                
+            case Command.pickup.rawValue:
+                print(game.pickup(userInput: userCommands[1]))
+                
+            case Command.walk.rawValue:
+                print(game.look())
+                
+            default:
+                print("I don't understand.")
+            }
+        }
+
+    }
+    
 
 }
 
