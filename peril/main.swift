@@ -105,6 +105,15 @@ class Game {
         return nil
     }
     
+    func playerRoom() -> Room? {
+        for room in world {
+            if room.node.location == player.location {
+                return room
+            }
+        }
+        return nil
+    }
+    
     func look() -> String {
         var result = ""
         result.append(describeLocation()!)
@@ -129,7 +138,17 @@ class Game {
     }
     
     func pickup(userInput: String) -> String {
-        let result = "You picked up the \(userInput)"
+        var result = "You can't pick that up"
+        
+        if let room = playerRoom() {
+            for object in room.objects.enumerated() {
+                if userInput == object.description {
+                    player.objects.append(object)
+                    result = "You pickup the \(userInput)"
+                }
+            }
+        }
+        
         return result
     }
 }
