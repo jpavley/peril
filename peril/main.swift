@@ -53,19 +53,54 @@ struct Object {
 
 struct Player {
     var location: String
-    var objects: [Object]
+    var pocket = Catalog(objects: [])
 }
 
 struct Room {
     var node: Node
     var edges: [Edge]
-    var objects: [Object]
+    var cache = Catalog(objects: [])
 }
+
+struct Catalog {
+    var objects: [Object]
+    
+    func countObjects() -> Int {
+        return objects.count
+    }
+    
+    func listObjects() -> String {
+        var result = ""
+        for o in objects {
+            result.append(o.name)
+            result.append(" ")
+        }
+        return result.trimmingCharacters(in: .whitespaces)
+    }
+    
+    mutating func addObject(o: Object) {
+        objects.append(o)
+    }
+    
+    mutating func removeObject(o: Object) {
+        var removeIndex = -1
+        for (i, object) in objects.enumerated() {
+            if object.name == o.name {
+                removeIndex = i
+                break
+            }
+        }
+        if removeIndex > -1 {
+            objects.remove(at: removeIndex)
+        }
+    }
+}
+
 
 // classes
 
 class Game {
-    var player: Player = Player(location: "living room", objects: [Object]())
+    var player = Player(location: "living room", pocket: Catalog(objects: []))
     var world: [Room] = []
     
     func describeLocation() -> String? {
@@ -95,7 +130,7 @@ class Game {
         for room in world {
             if room.node.name == player.location {
                 var result = ""
-                for object in room.objects {
+                for object in room.cache.objects {
                     result.append("You see a \(object.name) on the \(object.position).")
                     result.append(" ")
                 }
@@ -126,13 +161,10 @@ class Game {
     
     func inventory() -> String {
         var result = "In your pocket you found: "
-        if player.objects.count == 0 {
+        if player.pocket.countObjects() == 0 {
             result.append("nothing")
         } else {
-            for object in player.objects {
-                result.append(object.name)
-                result.append(" ")
-            }
+            result.append(player.pocket.listObjects())
         }
         return result
     }
@@ -143,8 +175,8 @@ class Game {
         if let room = playerRoom() {
             for object in room.objects {
                 if userInput == object.name {
-                    player.objects.append(object)
                     result = "You pickup the \(userInput)"
+                    player.pocket.addObject(o: object)
                 }
             }
         }
