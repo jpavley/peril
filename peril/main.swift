@@ -30,6 +30,8 @@ enum Command: String {
     case pickup = "pickup"
     case inventory = "inventory"
     case quit = "quit"
+    case user = "use"
+    case drop = "drop"
 }
 
 // structures
@@ -53,16 +55,16 @@ struct Object {
 
 struct Player {
     var location: String
-    var pocket = Catalog(objects: [])
+    var pocket = Loot(objects: [])
 }
 
 struct Room {
     var node: Node
     var edges: [Edge]
-    var cache = Catalog(objects: [])
+    var cache = Loot(objects: [])
 }
 
-struct Catalog {
+struct Loot {
     var objects: [Object]
     
     func countObjects() -> Int {
@@ -100,7 +102,7 @@ struct Catalog {
 // classes
 
 class Game {
-    var player = Player(location: "living room", pocket: Catalog(objects: []))
+    var player = Player(location: "living room", pocket: Loot(objects: []))
     var world: [Room] = []
     
     func describeLocation() -> String? {
@@ -172,8 +174,10 @@ class Game {
     func pickup(userInput: String) -> String {
         var result = "You can't pick that up"
         
+        // add the picked up object to the player's pocket
+        // (room is immutible here)
         if let room = playerRoom() {
-            for object in room.objects {
+            for object in room.cache.objects {
                 if userInput == object.name {
                     result = "You pickup the \(userInput)"
                     player.pocket.addObject(o: object)
@@ -181,6 +185,18 @@ class Game {
             }
         }
         
+        // remove the picked up object from the room the player is in
+        // (room, world[i], is mutable here)
+        let roomName = playerRoom()?.node.name
+        for i in 0..<world.count {
+            if world[i].node.name == roomName {
+                for object in world[i].cache.objects {
+                    if object.name == userInput {
+                        world[i].cache.removeObject(o: object)
+                    }
+                }
+            }
+        }
         return result
     }
 }
@@ -202,11 +218,12 @@ func main() {
     let whiskeyObject = Object(name: "bottle", position: "floor")
     let bucketObject = Object(name: "bucket", position: "table")
     let frogObject = Object(name: "frog", position: "ground")
-    let chainObject = Object(name: "chain", position: "grass")
+    let chainObject = Object(name: "key", position: "grass")
+    let ringObject = Object(name: "ring", position: "box")
     
-    let room1 = Room(node: livingroomNode, edges: [livingroomEdge1, livingroomEdge2], objects: [whiskeyObject, bucketObject])
-    let room2 = Room(node: gardenNode, edges: [gardenEdge], objects: [frogObject, chainObject])
-    let room3 = Room(node: atticNode, edges: [atticEdge], objects: [Object]())
+    let room1 = Room(node: livingroomNode, edges: [livingroomEdge1, livingroomEdge2], cache: Loot(objects: [whiskeyObject, bucketObject]))
+    let room2 = Room(node: gardenNode, edges: [gardenEdge], cache: Loot(objects: [frogObject, chainObject]))
+    let room3 = Room(node: atticNode, edges: [atticEdge], cache: Loot(objects: [ringObject]))
     
     
     game.world.append(room1)
