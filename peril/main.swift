@@ -35,7 +35,7 @@ enum Command: String {
 // structures
 
 struct Node {
-    var location: String
+    var name: String
     var description: String
 }
 
@@ -47,7 +47,7 @@ struct Edge {
 }
 
 struct Object {
-    var description: String
+    var name: String
     var position: String
 }
 
@@ -70,7 +70,7 @@ class Game {
     
     func describeLocation() -> String? {
         for room in world {
-            if room.node.location == player.location {
+            if room.node.name == player.location {
                 return room.node.description
             }
         }
@@ -79,7 +79,7 @@ class Game {
     
     func describeEdges() -> String? {
         for room in world {
-            if room.node.location == player.location {
+            if room.node.name == player.location {
                 var result = ""
                 for edge in room.edges {
                     result.append("There is a \(edge.path) going \(edge.direciton) from here.")
@@ -93,10 +93,10 @@ class Game {
     
     func describeObjects() -> String? {
         for room in world {
-            if room.node.location == player.location {
+            if room.node.name == player.location {
                 var result = ""
                 for object in room.objects {
-                    result.append("You see a \(object.description) on the \(object.position).")
+                    result.append("You see a \(object.name) on the \(object.position).")
                     result.append(" ")
                 }
                 return result
@@ -107,7 +107,7 @@ class Game {
     
     func playerRoom() -> Room? {
         for room in world {
-            if room.node.location == player.location {
+            if room.node.name == player.location {
                 return room
             }
         }
@@ -130,7 +130,7 @@ class Game {
             result.append("nothing")
         } else {
             for object in player.objects {
-                result.append(object.description)
+                result.append(object.name)
                 result.append(" ")
             }
         }
@@ -142,7 +142,7 @@ class Game {
         
         if let room = playerRoom() {
             for object in room.objects {
-                if userInput == object.description {
+                if userInput == object.name {
                     player.objects.append(object)
                     result = "You pickup the \(userInput)"
                 }
@@ -158,19 +158,19 @@ class Game {
 func main() {
     let game = Game()
     
-    let livingroomNode = Node(location: "living room", description: "You are in the living room. A wizard is snorning loudly on the couch.")
-    let gardenNode = Node(location: "garden", description: "You are in a beautiful garden. There is a well in front of you.")
-    let atticNode = Node(location: "attic", description: "You are in the attic. There is a giant welding a torch in the corner.")
+    let livingroomNode = Node(name: "living room", description: "You are in the living room. A wizard is snorning loudly on the couch.")
+    let gardenNode = Node(name: "garden", description: "You are in a beautiful garden. There is a well in front of you.")
+    let atticNode = Node(name: "attic", description: "You are in the attic. There is a giant welding a torch in the corner.")
     
     let livingroomEdge1 = Edge(orgin: "living room", destination: "garden", direciton: .west, path: .door)
     let livingroomEdge2 = Edge(orgin: "living room", destination: "attic", direciton: .upstairs, path: .ladder)
     let gardenEdge = Edge(orgin: "garden", destination: "living room", direciton: .east, path: .door)
     let atticEdge = Edge(orgin: "attic", destination: "living room", direciton: .downstairs, path: .ladder)
     
-    let whiskeyObject = Object(description: "bottle", position: "floor")
-    let bucketObject = Object(description: "bucket", position: "table")
-    let frogObject = Object(description: "frog", position: "ground")
-    let chainObject = Object(description: "chain", position: "grass")
+    let whiskeyObject = Object(name: "bottle", position: "floor")
+    let bucketObject = Object(name: "bucket", position: "table")
+    let frogObject = Object(name: "frog", position: "ground")
+    let chainObject = Object(name: "chain", position: "grass")
     
     let room1 = Room(node: livingroomNode, edges: [livingroomEdge1, livingroomEdge2], objects: [whiskeyObject, bucketObject])
     let room2 = Room(node: gardenNode, edges: [gardenEdge], objects: [frogObject, chainObject])
