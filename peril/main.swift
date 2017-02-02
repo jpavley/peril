@@ -243,7 +243,9 @@ func main() {
     while !gameOver {
         if let userInput = readLine() {
             
-            let userCommands = userInput.components(separatedBy: " ")
+            let normalizedUserInput = userInput.lowercased()
+            
+            let userCommands = normalizedUserInput.components(separatedBy: " ")
             
             switch userCommands[0] {
                 
@@ -263,7 +265,7 @@ func main() {
                 print(game.look())
                 
             default:
-                print("I don't understand.")
+                print("I don't understand \(userInput)")
             }
             
             print(greeting, terminator: " ")
