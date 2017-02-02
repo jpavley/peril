@@ -186,8 +186,9 @@ class Game {
         }
         
         // remove the picked up object from the room the player is in
-        // (room, world[i], is mutable here)
+        // (room, world[i], is mutable and not a copy here)
         let roomName = playerRoom()?.node.name
+        
         for i in 0..<world.count {
             if world[i].node.name == roomName {
                 for object in world[i].cache.objects {
@@ -205,6 +206,8 @@ class Game {
 
 func main() {
     let game = Game()
+    
+    let greeting = "Enter a command:"
     
     let livingroomNode = Node(name: "living room", description: "You are in the living room. A wizard is snorning loudly on the couch.")
     let gardenNode = Node(name: "garden", description: "You are in a beautiful garden. There is a well in front of you.")
@@ -233,7 +236,7 @@ func main() {
     print("Welcome to the Peril. Enter at your risk.")
     print(" ")
     
-    print("Enter a command: ")
+    print(greeting, terminator: " ")
     
     var gameOver = false
     
@@ -262,8 +265,10 @@ func main() {
             default:
                 print("I don't understand.")
             }
-        }
+            
+            print(greeting, terminator: " ")
 
+        }
     }
     
 
