@@ -164,22 +164,50 @@ class Game {
     func inventory() -> String {
         var result = "In your pocket you found: "
         if player.pocket.countObjects() == 0 {
-            result.append("nothing")
+            result.append("nothing.")
         } else {
             result.append(player.pocket.listObjects())
         }
         return result
     }
     
+    func walk(userInput: String) -> String {
+        var result = "You can't walk there."
+        
+        // early return
+        if userInput == "" {
+            return result
+        }
+
+        if let room = playerRoom() {
+            for edge in room.edges {
+                if userInput == edge.direciton.rawValue {
+                    player.location = edge.destination
+                    result = look()
+                }
+            }
+        }
+        // get the current room
+        // for each edge in the current room see if matches the user input
+        // if so chane the user's location
+        
+        return result
+    }
+    
     func pickup(userInput: String) -> String {
-        var result = "You can't pick that up"
+        var result = "You can't pick that up."
+        
+        // early return
+        if userInput == "" {
+            return result
+        }
         
         // add the picked up object to the player's pocket
         // (room is immutible here)
         if let room = playerRoom() {
             for object in room.cache.objects {
                 if userInput == object.name {
-                    result = "You pickup the \(userInput)"
+                    result = "You pickup the \(userInput)."
                     player.pocket.addObject(o: object)
                 }
             }
@@ -259,13 +287,21 @@ func main() {
                 print(game.inventory())
                 
             case Command.pickup.rawValue:
-                print(game.pickup(userInput: userCommands[1]))
+                if userCommands.count > 1 {
+                    print(game.pickup(userInput: userCommands[1]))
+                } else {
+                    print("Please restate the command.")
+                }
                 
             case Command.walk.rawValue:
-                print(game.look())
+                if userCommands.count > 1 {
+                    print(game.walk(userInput: userCommands[1]))
+                } else {
+                    print("Please restate the command.")
+                }
                 
             default:
-                print("I don't understand \(userInput)")
+                print("I don't understand \(userInput).")
             }
         }
     }
