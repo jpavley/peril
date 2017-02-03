@@ -236,11 +236,11 @@ func main() {
     print("Welcome to the Peril. Enter at your risk.")
     print(" ")
     
-    print(greeting, terminator: " ")
-    
     var gameOver = false
     
     while !gameOver {
+        print(greeting, terminator: " ")
+
         if let userInput = readLine() {
             
             let normalizedUserInput = userInput.lowercased()
@@ -267,9 +267,6 @@ func main() {
             default:
                 print("I don't understand \(userInput)")
             }
-            
-            print(greeting, terminator: " ")
-
         }
     }
     
