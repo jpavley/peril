@@ -30,7 +30,6 @@ enum Command: String {
     case pickup = "pickup"
     case inventory = "inventory"
     case quit = "quit"
-    case user = "use"
     case drop = "drop"
 }
 
@@ -87,19 +86,6 @@ struct Loot {
     mutating func addObject(o: Object) {
         objects.append(o)
     }
-    
-    mutating func removeObject(o: Object) {
-        var removeIndex = -1
-        for (i, object) in objects.enumerated() {
-            if object.name == o.name {
-                removeIndex = i
-                break
-            }
-        }
-        if removeIndex > -1 {
-            objects.remove(at: removeIndex)
-        }
-    }
 }
 
 
@@ -107,51 +93,35 @@ struct Loot {
 
 class Game {
     var player = Player(location: "living room", pocket: Loot(objects: []))
-    var world: [Room] = []
+    var world: [String:Room] = [:]
     
     func describeLocation() -> String? {
-        for room in world {
-            if room.node.name == player.location {
-                return room.node.description
-            }
-        }
-        return nil
+        return world[player.location]?.node.description
     }
     
     func describeEdges() -> String? {
-        for room in world {
-            if room.node.name == player.location {
-                var result = ""
-                for edge in room.edges {
-                    result.append("There is a \(edge.path) going \(edge.direciton) from here.")
-                    result.append(" ")
-                }
-                return result
+        if let room = world[player.location] {
+            var result = ""
+            for edge in room.edges {
+                result.append("There is a \(edge.path) going \(edge.direciton) from here.")
+                result.append(" ")
             }
+            return result
         }
+        
         return nil
     }
     
     func describeObjects() -> String? {
-        for room in world {
-            if room.node.name == player.location {
-                var result = ""
-                for object in room.cache.objects {
-                    result.append("You see a \(object.name) on the \(object.position).")
-                    result.append(" ")
-                }
-                return result
+        if let room = world[player.location] {
+            var result = ""
+            for object in room.cache.objects {
+                result.append("You see a \(object.name) on the \(object.position).")
+                result.append(" ")
             }
+            return result
         }
-        return nil
-    }
-    
-    func playerRoom() -> Room? {
-        for room in world {
-            if room.node.name == player.location {
-                return room
-            }
-        }
+        
         return nil
     }
     
@@ -183,7 +153,7 @@ class Game {
             return result
         }
 
-        if let room = playerRoom() {
+        if let room = world[player.location] {
             for edge in room.edges {
                 if userInput == edge.direciton.rawValue {
                     player.location = edge.destination
@@ -191,9 +161,6 @@ class Game {
                 }
             }
         }
-        // get the current room
-        // for each edge in the current room see if matches the user input
-        // if so chane the user's location
         
         return result
     }
@@ -206,30 +173,16 @@ class Game {
             return result
         }
         
-        // add the picked up object to the player's pocket
-        // (room is immutible here)
-        if let room = playerRoom() {
-            for object in room.cache.objects {
+        if let room = world[player.location] {
+            for (i, object) in room.cache.objects.enumerated() {
                 if userInput == object.name {
                     result = "You pickup the \(userInput)."
                     player.pocket.addObject(o: object)
+                    world[room.node.name]?.cache.objects.remove(at: i)
                 }
             }
         }
         
-        // remove the picked up object from the room the player is in
-        // (room, world[i], is mutable and not a copy here)
-        let roomName = playerRoom()?.node.name
-        
-        for i in 0..<world.count {
-            if world[i].node.name == roomName {
-                for object in world[i].cache.objects {
-                    if object.name == userInput {
-                        world[i].cache.removeObject(o: object)
-                    }
-                }
-            }
-        }
         return result
     }
 }
@@ -261,9 +214,9 @@ func main() {
     let room3 = Room(node: atticNode, edges: [atticEdge], cache: Loot(objects: [ringObject]))
     
     
-    game.world.append(room1)
-    game.world.append(room2)
-    game.world.append(room3)
+    game.world["living room"] = room1
+    game.world["garden"] = room2
+    game.world["attic"] = room3
     
     print("Welcome to the Peril. Enter at your risk.")
     print(" ")
