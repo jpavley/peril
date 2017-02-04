@@ -73,9 +73,13 @@ struct Loot {
     
     func listObjects() -> String {
         var result = ""
-        for o in objects {
+        for (i, o) in objects.enumerated() {
             result.append(o.name)
-            result.append(" ")
+            if i < objects.endIndex - 1 {
+                result.append(", ")
+            } else {
+                result.append(". ")
+            }
         }
         return result.trimmingCharacters(in: .whitespaces)
     }
