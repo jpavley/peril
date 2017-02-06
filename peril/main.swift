@@ -220,10 +220,12 @@ func main() {
     
     print("Welcome to the Peril. Enter at your risk.")
     print(" ")
+    print(game.look())
     
     var gameOver = false
     
     while !gameOver {
+        print(" ")
         print(greeting, terminator: " ")
 
         if let userInput = readLine() {
@@ -235,29 +237,36 @@ func main() {
             switch userCommands[0] {
                 
             case Command.look.rawValue:
+                print(" ")
                 print(game.look())
                 
             case Command.quit.rawValue:
                 gameOver = true
                 
             case Command.inventory.rawValue:
+                print(" ")
                 print(game.inventory())
                 
             case Command.pickup.rawValue:
                 if userCommands.count > 1 {
+                    print(" ")
                     print(game.pickup(userInput: userCommands[1]))
                 } else {
+                    print(" ")
                     print("Please restate the command.")
                 }
                 
             case Command.walk.rawValue:
                 if userCommands.count > 1 {
+                    print(" ")
                     print(game.walk(userInput: userCommands[1]))
                 } else {
+                    print(" ")
                     print("Please restate the command.")
                 }
                 
             default:
+                print(" ")
                 print("I don't understand \(userInput).")
             }
         }
