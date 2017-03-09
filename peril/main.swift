@@ -24,16 +24,25 @@ enum Route: String {
     case ladder = "ladder"
 }
 
-enum Command: String {
+enum Instruction: String {
     case look = "look"
     case walk = "walk"
     case pickup = "pickup"
     case inventory = "inventory"
     case quit = "quit"
-    case drop = "drop"
+//    case drop = "drop"
+//    case help = "help"
 }
 
+
 // structures
+
+struct Command {
+    var id: Int
+    var name: String
+    var description: String
+    var action: (String) -> (String)
+}
 
 struct Node {
     var name: String
@@ -94,6 +103,8 @@ struct Loot {
 class Game {
     var player = Player(location: "living room", pocket: Loot(objects: []))
     var world: [String:Room] = [:]
+    var commands = [Command]()
+    var gameOver = false
     
     func describeLocation() -> String? {
         return world[player.location]?.node.description
@@ -125,22 +136,30 @@ class Game {
         return nil
     }
     
-    func look() -> String {
+    func look(userInput: String) -> String {
         var result = ""
-        result.append(describeLocation()!)
-        result.append(" ")
-        result.append(describeEdges()!)
-        result.append(" ")
-        result.append(describeObjects()!)
+        if userInput == "" {
+            result.append(describeLocation()!)
+            result.append(" ")
+            result.append(describeEdges()!)
+            result.append(" ")
+            result.append(describeObjects()!)
+        } else {
+            result = "Looking at \(userInput) doesn't help"
+        }
         return result
     }
     
-    func inventory() -> String {
+    func inventory(userInput: String) -> String {
         var result = "In your pocket you found: "
-        if player.pocket.countObjects() == 0 {
-            result.append("nothing.")
+        if userInput == "" {
+            if player.pocket.countObjects() == 0 {
+                result.append("nothing.")
+            } else {
+                result.append(player.pocket.listObjects())
+            }
         } else {
-            result.append(player.pocket.listObjects())
+            result = "\(userInput) doesn't have any pockets"
         }
         return result
     }
@@ -157,7 +176,8 @@ class Game {
             for edge in room.edges {
                 if userInput == edge.direciton.rawValue {
                     player.location = edge.destination
-                    result = look()
+                    result = look(userInput: "")
+                    break
                 }
             }
         }
@@ -169,7 +189,7 @@ class Game {
         var result = "You can't pick that up."
         
         // early return
-        if userInput == "" {
+        if userInput == "Please restate the command" {
             return result
         }
         
@@ -185,6 +205,17 @@ class Game {
         
         return result
     }
+    
+    func quit(userInput: String) -> String {
+        var result = ""
+        if userInput == "" {
+            result = "Thanks for playing!"
+            gameOver = true
+        } else {
+            result = "Can't stop \(userInput)."
+        }
+        return result
+    }
 }
 
 // main
@@ -193,6 +224,14 @@ func main() {
     let game = Game()
     
     let greeting = "Enter a command:"
+    
+    let lookCommand = Command(id: 100, name: Instruction.look.rawValue, description: "Returns the description of something.", action: game.look)
+    let walkCommand = Command(id: 102, name: Instruction.walk.rawValue, description: "Moves the player in a direction.", action: game.walk)
+    let pickUpCommand = Command(id: 104, name: Instruction.pickup.rawValue, description: "Places something in the player's pocket.", action: game.look)
+    let inventoryCommand = Command(id: 106, name: Instruction.inventory.rawValue, description: "List the contents of the players pocket.", action: game.inventory)
+    let quitCommand = Command(id: 108, name: Instruction.quit.rawValue, description: "Exits the game.", action: game.quit)
+    
+    let globalCommands = [lookCommand, walkCommand, pickUpCommand, inventoryCommand, quitCommand]
     
     let livingroomNode = Node(name: "living room", description: "You are in the living room. A wizard is snorning loudly on the couch.")
     let gardenNode = Node(name: "garden", description: "You are in a beautiful garden. There is a well in front of you.")
@@ -213,18 +252,17 @@ func main() {
     let room2 = Room(node: gardenNode, edges: [gardenEdge], cache: Loot(objects: [frogObject, chainObject]))
     let room3 = Room(node: atticNode, edges: [atticEdge], cache: Loot(objects: [ringObject]))
     
-    
+    game.commands = globalCommands
     game.world["living room"] = room1
     game.world["garden"] = room2
     game.world["attic"] = room3
     
     print("Welcome to the Peril. Enter at your risk.")
     print(" ")
-    print(game.look())
+    print(game.look(userInput: ""))
     
-    var gameOver = false
     
-    while !gameOver {
+    while !game.gameOver {
         print(" ")
         print(greeting, terminator: " ")
 
@@ -234,45 +272,20 @@ func main() {
             
             let userCommands = normalizedUserInput.components(separatedBy: " ")
             
-            switch userCommands[0] {
-                
-            case Command.look.rawValue:
-                print(" ")
-                print(game.look())
-                
-            case Command.quit.rawValue:
-                gameOver = true
-                
-            case Command.inventory.rawValue:
-                print(" ")
-                print(game.inventory())
-                
-            case Command.pickup.rawValue:
-                if userCommands.count > 1 {
-                    print(" ")
-                    print(game.pickup(userInput: userCommands[1]))
-                } else {
-                    print(" ")
-                    print("Please restate the command.")
+            // new command parsing
+            
+            for cmd in globalCommands {
+                if userCommands[0] == cmd.name {
+                    var userInput = ""
+                    if userCommands.count > 1 {
+                        userInput = userCommands[1]
+                    }
+                    print(cmd.action(userInput))
+                    break
                 }
-                
-            case Command.walk.rawValue:
-                if userCommands.count > 1 {
-                    print(" ")
-                    print(game.walk(userInput: userCommands[1]))
-                } else {
-                    print(" ")
-                    print("Please restate the command.")
-                }
-                
-            default:
-                print(" ")
-                print("I don't understand \(userInput).")
             }
         }
     }
-    
-
 }
 
 main()
