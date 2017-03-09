@@ -24,17 +24,6 @@ enum Route: String {
     case ladder = "ladder"
 }
 
-enum Instruction: String {
-    case look = "look"
-    case walk = "walk"
-    case pickup = "pickup"
-    case inventory = "inventory"
-    case quit = "quit"
-//    case drop = "drop"
-//    case help = "help"
-}
-
-
 // structures
 
 struct Command {
@@ -52,7 +41,7 @@ struct Node {
 struct Edge {
     var orgin: String
     var destination: String
-    var direciton: Direction
+    var direction: Direction
     var path: Route
 }
 
@@ -115,7 +104,7 @@ class Game {
         if let room = world[player.location] {
             var result = ""
             for edge in room.edges {
-                result.append("There is a \(edge.path) going \(edge.direciton) from here.")
+                result.append("There is a \(edge.path) going \(edge.direction) from here.")
                 result.append(" ")
             }
             return result
@@ -175,7 +164,7 @@ class Game {
 
         if let room = world[player.location] {
             for edge in room.edges {
-                if userInput == edge.direciton.rawValue {
+                if userInput == edge.direction.rawValue {
                     player.location = edge.destination
                     result = look(userInput: "")
                     break
@@ -226,26 +215,26 @@ func main() {
     
     let greeting = "Enter a command:"
     
-    let lookCommand = Command(id: 100, name: Instruction.look.rawValue, description: "Returns the description of something.", action: game.look)
-    let walkCommand = Command(id: 102, name: Instruction.walk.rawValue, description: "Moves the player in a direction.", action: game.walk)
-    let pickUpCommand = Command(id: 104, name: Instruction.pickup.rawValue, description: "Places something in the player's pocket.", action: game.pickup)
-    let inventoryCommand = Command(id: 106, name: Instruction.inventory.rawValue, description: "List the contents of the players pocket.", action: game.inventory)
-    let quitCommand = Command(id: 108, name: Instruction.quit.rawValue, description: "Exits the game.", action: game.quit)
+    let lookCommand = Command(id: 100, name: "look", description: "Returns the description of something.", action: game.look)
+    let walkCommand = Command(id: 102, name: "walk", description: "Moves the player in a direction.", action: game.walk)
+    let pickUpCommand = Command(id: 104, name: "pickup", description: "Places something in the player's pocket.", action: game.pickup)
+    let inventoryCommand = Command(id: 106, name: "inventory", description: "List the contents of the players pocket.", action: game.inventory)
+    let quitCommand = Command(id: 108, name: "quit", description: "Exits the game.", action: game.quit)
     
-    game.commands[Instruction.look.rawValue] = lookCommand
-    game.commands[Instruction.walk.rawValue] = walkCommand
-    game.commands[Instruction.pickup.rawValue] = pickUpCommand
-    game.commands[Instruction.inventory.rawValue] = inventoryCommand
-    game.commands[Instruction.quit.rawValue] = quitCommand
+    game.commands["look"] = lookCommand
+    game.commands["walk"] = walkCommand
+    game.commands["pickup"] = pickUpCommand
+    game.commands["inventory"] = inventoryCommand
+    game.commands["quit"] = quitCommand
     
     let livingroomNode = Node(name: "living room", description: "You are in the living room. A wizard is snorning loudly on the couch.")
     let gardenNode = Node(name: "garden", description: "You are in a beautiful garden. There is a well in front of you.")
     let atticNode = Node(name: "attic", description: "You are in the attic. There is a giant welding a torch in the corner.")
     
-    let livingroomEdge1 = Edge(orgin: "living room", destination: "garden", direciton: .west, path: .door)
-    let livingroomEdge2 = Edge(orgin: "living room", destination: "attic", direciton: .upstairs, path: .ladder)
-    let gardenEdge = Edge(orgin: "garden", destination: "living room", direciton: .east, path: .door)
-    let atticEdge = Edge(orgin: "attic", destination: "living room", direciton: .downstairs, path: .ladder)
+    let livingroomEdge1 = Edge(orgin: "living room", destination: "garden", direction: .west, path: .door)
+    let livingroomEdge2 = Edge(orgin: "living room", destination: "attic", direction: .upstairs, path: .ladder)
+    let gardenEdge = Edge(orgin: "garden", destination: "living room", direction: .east, path: .door)
+    let atticEdge = Edge(orgin: "attic", destination: "living room", direction: .downstairs, path: .ladder)
     
     let whiskeyObject = Object(name: "bottle", position: "floor")
     let bucketObject = Object(name: "bucket", position: "table")
