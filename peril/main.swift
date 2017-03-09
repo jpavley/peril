@@ -103,7 +103,8 @@ struct Loot {
 class Game {
     var player = Player(location: "living room", pocket: Loot(objects: []))
     var world: [String:Room] = [:]
-    var commands = [Command]()
+    //  var commands = [Command]()
+    var commands: [String:Command] = [:]
     var gameOver = false
     
     func describeLocation() -> String? {
@@ -227,11 +228,15 @@ func main() {
     
     let lookCommand = Command(id: 100, name: Instruction.look.rawValue, description: "Returns the description of something.", action: game.look)
     let walkCommand = Command(id: 102, name: Instruction.walk.rawValue, description: "Moves the player in a direction.", action: game.walk)
-    let pickUpCommand = Command(id: 104, name: Instruction.pickup.rawValue, description: "Places something in the player's pocket.", action: game.look)
+    let pickUpCommand = Command(id: 104, name: Instruction.pickup.rawValue, description: "Places something in the player's pocket.", action: game.pickup)
     let inventoryCommand = Command(id: 106, name: Instruction.inventory.rawValue, description: "List the contents of the players pocket.", action: game.inventory)
     let quitCommand = Command(id: 108, name: Instruction.quit.rawValue, description: "Exits the game.", action: game.quit)
     
-    let globalCommands = [lookCommand, walkCommand, pickUpCommand, inventoryCommand, quitCommand]
+    game.commands[Instruction.look.rawValue] = lookCommand
+    game.commands[Instruction.walk.rawValue] = walkCommand
+    game.commands[Instruction.pickup.rawValue] = pickUpCommand
+    game.commands[Instruction.inventory.rawValue] = inventoryCommand
+    game.commands[Instruction.quit.rawValue] = quitCommand
     
     let livingroomNode = Node(name: "living room", description: "You are in the living room. A wizard is snorning loudly on the couch.")
     let gardenNode = Node(name: "garden", description: "You are in a beautiful garden. There is a well in front of you.")
@@ -252,7 +257,6 @@ func main() {
     let room2 = Room(node: gardenNode, edges: [gardenEdge], cache: Loot(objects: [frogObject, chainObject]))
     let room3 = Room(node: atticNode, edges: [atticEdge], cache: Loot(objects: [ringObject]))
     
-    game.commands = globalCommands
     game.world["living room"] = room1
     game.world["garden"] = room2
     game.world["attic"] = room3
@@ -272,17 +276,12 @@ func main() {
             
             let userCommands = normalizedUserInput.components(separatedBy: " ")
             
-            // new command parsing
-            
-            for cmd in globalCommands {
-                if userCommands[0] == cmd.name {
-                    var userInput = ""
-                    if userCommands.count > 1 {
-                        userInput = userCommands[1]
-                    }
-                    print(cmd.action(userInput))
-                    break
+            if let cmd = game.commands[userCommands[0]] {
+                var userInput = ""
+                if userCommands.count > 1 {
+                    userInput = userCommands[1]
                 }
+                print(cmd.action(userInput))
             }
         }
     }
