@@ -19,11 +19,6 @@ enum Direction: String {
     case west = "west"
 }
 
-enum Route: String {
-    case door = "door"
-    case ladder = "ladder"
-}
-
 // structures
 
 struct Command {
@@ -42,7 +37,7 @@ struct Edge {
     var orgin: String
     var destination: String
     var direction: Direction
-    var path: Route
+    var path: String
 }
 
 struct Object {
@@ -231,10 +226,10 @@ func main() {
     let gardenNode = Node(name: "garden", description: "You are in a beautiful garden. There is a well in front of you.")
     let atticNode = Node(name: "attic", description: "You are in the attic. There is a giant welding a torch in the corner.")
     
-    let livingroomEdge1 = Edge(orgin: "living room", destination: "garden", direction: .west, path: .door)
-    let livingroomEdge2 = Edge(orgin: "living room", destination: "attic", direction: .upstairs, path: .ladder)
-    let gardenEdge = Edge(orgin: "garden", destination: "living room", direction: .east, path: .door)
-    let atticEdge = Edge(orgin: "attic", destination: "living room", direction: .downstairs, path: .ladder)
+    let livingroomEdge1 = Edge(orgin: "living room", destination: "garden", direction: .west, path: "door")
+    let livingroomEdge2 = Edge(orgin: "living room", destination: "attic", direction: .upstairs, path: "ladder")
+    let gardenEdge = Edge(orgin: "garden", destination: "living room", direction: .east, path: "door")
+    let atticEdge = Edge(orgin: "attic", destination: "living room", direction: .downstairs, path: "ladder")
     
     let whiskeyObject = Object(name: "bottle", position: "floor")
     let bucketObject = Object(name: "bucket", position: "table")
