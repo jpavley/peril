@@ -1,0 +1,37 @@
+[
+  {
+    "command": {
+      "id": 100,
+      "name": "look",
+      "description": "Returns the description of something."
+    }
+  },
+  {
+    "command": {
+      "id": 102,
+      "name": "walk",
+      "description": "Moves the player in a direction."
+    }
+  },
+  {
+    "command": {
+      "id": 104,
+      "name": "pickup",
+      "description": "Places something in the player's pocket."
+    }
+  },
+  {
+    "command": {
+      "id": 106,
+      "name": "inventory",
+      "description": "List the contents of the players pocket."
+    }
+  },
+  {
+    "command": {
+      "id": 108,
+      "name": "quit",
+      "description": "Exits the game."
+    }
+  }
+]
