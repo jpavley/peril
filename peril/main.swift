@@ -8,17 +8,6 @@
 
 import Foundation
 
-// enumerations
-
-enum Direction: String {
-    case upstairs = "upstairs"
-    case downstairs = "downstairs"
-    case north = "north"
-    case south = "south"
-    case east = "east"
-    case west = "west"
-}
-
 // structures
 
 struct Command {
@@ -36,7 +25,7 @@ struct Node {
 struct Edge {
     var orgin: String
     var destination: String
-    var direction: Direction
+    var direction: String
     var path: String
 }
 
@@ -159,7 +148,7 @@ class Game {
 
         if let room = world[player.location] {
             for edge in room.edges {
-                if userInput == edge.direction.rawValue {
+                if userInput == edge.direction {
                     player.location = edge.destination
                     result = look(userInput: "")
                     break
@@ -226,10 +215,10 @@ func main() {
     let gardenNode = Node(name: "garden", description: "You are in a beautiful garden. There is a well in front of you.")
     let atticNode = Node(name: "attic", description: "You are in the attic. There is a giant welding a torch in the corner.")
     
-    let livingroomEdge1 = Edge(orgin: "living room", destination: "garden", direction: .west, path: "door")
-    let livingroomEdge2 = Edge(orgin: "living room", destination: "attic", direction: .upstairs, path: "ladder")
-    let gardenEdge = Edge(orgin: "garden", destination: "living room", direction: .east, path: "door")
-    let atticEdge = Edge(orgin: "attic", destination: "living room", direction: .downstairs, path: "ladder")
+    let livingroomEdge1 = Edge(orgin: "living room", destination: "garden", direction: "west", path: "door")
+    let livingroomEdge2 = Edge(orgin: "living room", destination: "attic", direction: "upstairs", path: "ladder")
+    let gardenEdge = Edge(orgin: "garden", destination: "living room", direction: "east", path: "door")
+    let atticEdge = Edge(orgin: "attic", destination: "living room", direction: "downstairs", path: "ladder")
     
     let whiskeyObject = Object(name: "bottle", position: "floor")
     let bucketObject = Object(name: "bucket", position: "table")
@@ -249,6 +238,7 @@ func main() {
     print(" ")
     print(game.look(userInput: ""))
     
+    // game loop
     
     while !game.gameOver {
         print(" ")
