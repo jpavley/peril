@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		5A3AB4A01E34312000FD15AB /* peril */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = peril; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A3AB4A31E34312000FD15AB /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		5A7E91891E7A24AC0024F7BC /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		B855BEAE1E74B0E60078AB23 /* game.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = game.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,6 +61,7 @@
 			children = (
 				5A3AB4A31E34312000FD15AB /* main.swift */,
 				B855BEAE1E74B0E60078AB23 /* game.json */,
+				5A7E91891E7A24AC0024F7BC /* readme.md */,
 			);
 			path = peril;
 			sourceTree = "<group>";
