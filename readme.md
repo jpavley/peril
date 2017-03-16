@@ -76,6 +76,6 @@ I hope to build this game without depenencies on libraries outside of what Apple
 a text adventure game before (Himins) with NodeJS and dozens of NPM modules. But the modules kept changing
 and the dependencies were driving me crazy. 
 
-I hope to wrote this game so that non-technical folks can create games on top of it.
+I hope to write this game so that non-technical folks can create games on top of it.
 
 I hope to write as little code as possible but still be super readable for a beginner coder.
