@@ -1,37 +1,52 @@
-[
-  {
-    "command": {
-      "id": 100,
-      "name": "look",
-      "description": "Returns the description of something."
+{
+    "game-info": {
+        "name": "The Peril",
+        "welcome": "Welcome to the Peril. Enter at your own risk...",
+        "prompt": "Enter a command"
+    },
+    "commands": [{
+                 "id": 100,
+                 "name": "look",
+                 "description": "Returns the description of something."
+                 },
+                 {
+                 "id": 102,
+                 "name": "walk",
+                 "description": "Moves the player in a direction."
+                 },
+                 {
+                 "id": 104,
+                 "name": "pickup",
+                 "description": "Places something in the player's pocket."
+                 },
+                 {
+                 "id": 106,
+                 "name": "inventory",
+                 "description": "List the contents of the players pocket."
+                 },
+                 {
+                 "id": 108,
+                 "name": "quit",
+                 "description": "Exits the game."
+                 }],
+    "nodes": [{
+              "name": "living room",
+              "description": "You are in the living room. A wizard is snorning loudly on the couch."
+              },
+              {
+              "name": "garden",
+              "description": "You are in a beautiful garden. There is a well in front of you."
+              },
+              {
+              "name": "attic",
+              "description": "You are in the attic. There is a giant welding a torch in the corner."
+              }
+              }]
+    "edges": [{
+        "origin": "living room",
+        "destination": "garden",
+        "direction": "west",
+        "path": "door"
     }
-  },
-  {
-    "command": {
-      "id": 102,
-      "name": "walk",
-      "description": "Moves the player in a direction."
-    }
-  },
-  {
-    "command": {
-      "id": 104,
-      "name": "pickup",
-      "description": "Places something in the player's pocket."
-    }
-  },
-  {
-    "command": {
-      "id": 106,
-      "name": "inventory",
-      "description": "List the contents of the players pocket."
-    }
-  },
-  {
-    "command": {
-      "id": 108,
-      "name": "quit",
-      "description": "Exits the game."
-    }
-  }
-]
+    ]
+}
