@@ -30,23 +30,71 @@
                  "description": "Exits the game."
                  }],
     "nodes": [{
+              "id": 200,
               "name": "living room",
               "description": "You are in the living room. A wizard is snorning loudly on the couch."
               },
               {
+              "id": 202,
               "name": "garden",
               "description": "You are in a beautiful garden. There is a well in front of you."
               },
               {
+              "id": 204,
               "name": "attic",
               "description": "You are in the attic. There is a giant welding a torch in the corner."
-              }
-              }]
+              }],
     "edges": [{
-        "origin": "living room",
-        "destination": "garden",
-        "direction": "west",
-        "path": "door"
-    }
-    ]
+              "id": 300,
+              "origin": "living room",
+              "destination": "garden",
+              "direction": "west",
+              "path": "door"
+              },
+              {
+              "id": 302,
+              "origin": "living room",
+              "destination": "attic",
+              "direction": "upstairs",
+              "path": "ladder"
+              },
+              {
+              "id": 304,
+              "origin": "garden",
+              "destination": "living room",
+              "direction": "east",
+              "path": "door"
+              },
+              {
+              "id": 306,
+              "origin": "attic",
+              "destination": "living room",
+              "direction": "downstairs",
+              "path": "ladder"
+              }],
+    "objects": [{
+                "id": 400,
+                "name:": "bottle",
+                "position": "floor"
+                },
+                {
+                "id": 402,
+                "name:": "bucket",
+                "position": "table"
+                },
+                {
+                "id": 404,
+                "name:": "frog",
+                "position": "ground"
+                },
+                {
+                "id": 406,
+                "name:": "key",
+                "position": "ground"
+                },
+                {
+                "id": 408,
+                "name:": "ring",
+                "position": "box"
+                }]
 }
