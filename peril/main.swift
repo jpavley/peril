@@ -73,6 +73,8 @@ func main() {
                     userInput = userCommands[1]
                 }
                 print(cmd.action(userInput))
+            } else {
+                print("That doesn't look like \(normalizedUserInput) to me.")
             }
         }
     }
