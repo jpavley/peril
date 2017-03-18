@@ -51,7 +51,8 @@ func main() {
     game.world["garden"] = room2
     game.world["attic"] = room3
     
-    print("Welcome to the Peril. Enter at your risk.")
+    print(game.name)
+    print(game.welcome)
     print(" ")
     print(game.look(userInput: ""))
     
@@ -74,7 +75,7 @@ func main() {
                 }
                 print(cmd.action(userInput))
             } else {
-                print("That doesn't look like \(normalizedUserInput) to me.")
+                print(game.errorBadCommand)
             }
         }
     }

@@ -17,6 +17,14 @@ class Game {
     var commands: [String:Command] = [:]
     var gameOver = false
     
+    // game info from game.jason
+    var name = "The Peril"
+    var welcome = "Welcome to the Peril. Enter at your own risk..."
+    var prompt = "Enter a command:"
+    var errorBadCommand = "Please restate the command."
+    var errorBadPickup = "You can't pick that up."
+    
+    
     func describeLocation() -> String? {
         return world[player.location]?.node.description
     }
@@ -98,11 +106,6 @@ class Game {
     
     func pickup(userInput: String) -> String {
         var result = "You can't pick that up."
-        
-        // early return
-        if userInput == "Please restate the command." {
-            return result
-        }
         
         if let room = world[player.location] {
             for (i, object) in room.cache.objects.enumerated() {
