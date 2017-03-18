@@ -53,23 +53,24 @@ This convention of ranges for ID numbers give us error checking and limits the n
 
 Peril is going the change rapidly. None of this code is baked. But here are the major changes on deck:
 
-- Generate the game from a JSON File.
-- NPCs and monsters that the player can talk to and interact with.
-- Objects that perform actions (keys that open doors, doors that lock).
-- Scoring.
-- Player health.
-- Combat system.
-- Quests.
-- Interal game clock.
+- Generate the game from a JSON File
+- Implement a varible interpolation system
+- NPCs and monsters that the player can talk to and interact with
+- Objects that perform actions (keys that open doors, doors that lock)
+- Scoring
+- Player health
+- Combat system
+- Quests
+- Interal game clock
 - Save and load games inside the game
 - Load a game on startup from the command line
-- ASCII art.
-- Ability to run in a terminal. 
-- Player personalization and profiles.
+- ASCII art
+- Ability to run in a terminal
+- Player personalization and profiles
 - Color ANSI codes
-- Ability to run in a mobile app.
-- Ability to run on a web server and be played in a web browser.
-- Authoring app that constructs game config files.
+- Ability to run in a mobile app
+- Ability to run on a web server and be played in a web browser
+- Authoring app that constructs game config files
 
 ### Code Design Goals
 
