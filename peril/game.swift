@@ -100,7 +100,7 @@ class Game {
         var result = "You can't pick that up."
         
         // early return
-        if userInput == "Please restate the command" {
+        if userInput == "Please restate the command." {
             return result
         }
         

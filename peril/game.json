@@ -2,7 +2,10 @@
     "game-info": {
         "name": "The Peril",
         "welcome": "Welcome to the Peril. Enter at your own risk...",
-        "prompt": "Enter a command"
+        "prompt": "Enter a command:",
+        "error-bad-input": "That doesn't look like {{$0}} to me.",
+        "error-bad-command": "Please restate the command.",
+        "error-bad-pickup": "You can't pick that up."
     },
     "commands": [{
                  "id": 100,
