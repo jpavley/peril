@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5A3AB4A41E34312000FD15AB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3AB4A31E34312000FD15AB /* main.swift */; };
-		5AFDD1581E7A2EB600B5D8C1 /* readme.md in Sources */ = {isa = PBXBuildFile; fileRef = 5AFDD1571E7A2EB600B5D8C1 /* readme.md */; };
 		B8EBBC871E7D5F9F00E893E7 /* data-structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EBBC861E7D5F9F00E893E7 /* data-structures.swift */; };
 		B8EBBC891E7D607200E893E7 /* game.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EBBC881E7D607200E893E7 /* game.swift */; };
 /* End PBXBuildFile section */
@@ -134,7 +133,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AFDD1581E7A2EB600B5D8C1 /* readme.md in Sources */,
 				B8EBBC871E7D5F9F00E893E7 /* data-structures.swift in Sources */,
 				5A3AB4A41E34312000FD15AB /* main.swift in Sources */,
 				B8EBBC891E7D607200E893E7 /* game.swift in Sources */,
