@@ -61,7 +61,8 @@ Peril is going the change rapidly. None of this code is baked. But here are the 
 - Combat system.
 - Quests.
 - Interal game clock.
-- Save and load games.
+- Save and load games inside the game
+- Load a game on startup from the command line
 - ASCII art.
 - Ability to run in a terminal. 
 - Player personalization and profiles.
