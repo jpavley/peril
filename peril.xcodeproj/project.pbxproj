@@ -29,6 +29,7 @@
 		5A3AB4A01E34312000FD15AB /* peril */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = peril; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A3AB4A31E34312000FD15AB /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		5AFDD1571E7A2EB600B5D8C1 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
+		B80F51C91E7EC4BF00CF6559 /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 		B855BEAE1E74B0E60078AB23 /* game.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = game.json; sourceTree = "<group>"; };
 		B8EBBC861E7D5F9F00E893E7 /* data-structures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "data-structures.swift"; sourceTree = "<group>"; };
 		B8EBBC881E7D607200E893E7 /* game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = game.swift; sourceTree = "<group>"; };
@@ -70,6 +71,7 @@
 				B8EBBC881E7D607200E893E7 /* game.swift */,
 				5A3AB4A31E34312000FD15AB /* main.swift */,
 				B855BEAE1E74B0E60078AB23 /* game.json */,
+				B80F51C91E7EC4BF00CF6559 /* test.json */,
 			);
 			path = peril;
 			sourceTree = "<group>";

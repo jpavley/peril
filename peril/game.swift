@@ -24,6 +24,41 @@ class Game {
     var errorBadCommand = "Please restate the command."
     var errorBadPickup = "You can't pick that up."
     
+    // Apple's suggestion way of JSON initialization
+//    init?(json: [String: Any]) {
+//        guard let gameInfoJSON = json["game-info"] as? [String:String],
+//            let name = gameInfoJSON["name"],
+//            let welcome = gameInfoJSON["welcome"],
+//            let prompt = gameInfoJSON["prompt"],
+//            let errorBadCommand = gameInfoJSON["error-bad-command"],
+//            let errorBadPickup = gameInfoJSON["error-bad-pickup"]
+//            else {
+//                return nil
+//        }
+//        
+//        self.name = name
+//        self.welcome = welcome
+//        self.prompt = prompt
+//        self.errorBadCommand = errorBadCommand
+//        self.errorBadPickup = errorBadPickup
+//    }
+    
+    func readConfigFile(fileName: String, fileExtention: String) -> String? {
+        var result = ""
+
+        let docDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        if let fileURL = docDirectory?.appendingPathComponent(fileName).appendingPathExtension(fileExtention) {
+            do {
+                result = try String(contentsOf: fileURL)
+                print("Succeeded reading from URL: \(fileURL)")
+                return result
+            } catch {
+                print("Failed reading from URL: \(fileURL), Error: " + error.localizedDescription)
+                return nil
+            }
+        }
+        return nil
+    }
     
     func describeLocation() -> String? {
         return world[player.location]?.node.description

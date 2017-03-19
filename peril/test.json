@@ -1,0 +1,9 @@
+{
+    "game-info": {
+        "name": "The Peril",
+        "welcome": "Welcome to the Peril. Enter at your own risk...",
+        "prompt": "Enter a command:",
+        "error-bad-command": "Please restate the command.",
+        "error-bad-pickup": "You can't pick that up."
+    }
+}
