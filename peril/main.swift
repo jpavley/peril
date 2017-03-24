@@ -8,10 +8,38 @@
 
 import Foundation
 
+func readConfigFile(fileName: String, fileExtention: String) -> String? {
+    var result = ""
+    let docDirectory = try? FileManager.default.url(for: .desktopDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+    if let fileURL = docDirectory?.appendingPathComponent(fileName).appendingPathExtension(fileExtention) {
+        do {
+            result = try String(contentsOf: fileURL)
+            print("Succeeded reading from URL: \(fileURL)")
+            return result
+        } catch {
+            print("Failed reading from URL: \(fileURL), Error: " + error.localizedDescription)
+            return nil
+        }
+    }
+    return nil
+}
+
 
 // main
 
 func main() {
+    
+    let configFileName = "game"
+    let configFileExtension = "json"
+    
+    if let configFileString = readConfigFile(fileName: configFileName, fileExtention: configFileExtension) {
+        let jsonString = configFileString.data(using: .utf8)!
+        if let actualJSON = try? JSONSerialization.jsonObject(with: jsonString) as! [String:Any] {
+            let gameInfo = actualJSON["game-info"] as? [String:Any]
+            print(gameInfo!)
+        }
+    }
+    
     let game = Game()
     
     let greeting = "Enter a command:"
@@ -50,14 +78,6 @@ func main() {
     game.world["living room"] = room1
     game.world["garden"] = room2
     game.world["attic"] = room3
-    
-    let configFileName = "game"
-    let configFileExtension = "json"
-    
-    if let configDataString = game.readConfigFile(fileName: configFileName, fileExtention: configFileExtension) {
-        print(configDataString)
-    }
-
     
     print(game.name)
     print(game.welcome)
