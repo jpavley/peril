@@ -45,18 +45,33 @@ class Game {
     
     func readConfigFile(fileName: String, fileExtention: String) -> String? {
         var result = ""
-
-        let docDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        if let fileURL = docDirectory?.appendingPathComponent(fileName).appendingPathExtension(fileExtention) {
-            do {
-                result = try String(contentsOf: fileURL)
-                print("Succeeded reading from URL: \(fileURL)")
-                return result
-            } catch {
-                print("Failed reading from URL: \(fileURL), Error: " + error.localizedDescription)
-                return nil
-            }
+        
+        let currentPath = FileManager.default.currentDirectoryPath
+        let pathURL = URL(fileURLWithPath: currentPath)
+        let fileURL = pathURL.appendingPathComponent("\(fileName).\(fileExtention)")
+        print(fileURL)
+        do {
+            result = try String(contentsOf: fileURL)
+            print("Succeeded reading from URL: \(fileURL)")
+            return result
+        } catch {
+            print("Failed reading from URL: \(fileURL), Error: " + error.localizedDescription)
+            return nil
         }
+
+        
+        
+//        let docDirectory = try? FileManager.default.url(for: .applicationDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+//        if let fileURL = docDirectory?.appendingPathComponent(fileName).appendingPathExtension(fileExtention) {
+//            do {
+//                result = try String(contentsOf: fileURL)
+//                print("Succeeded reading from URL: \(fileURL)")
+//                return result
+//            } catch {
+//                print("Failed reading from URL: \(fileURL), Error: " + error.localizedDescription)
+//                return nil
+//            }
+//        }
         return nil
     }
     

@@ -51,7 +51,7 @@ func main() {
     game.world["garden"] = room2
     game.world["attic"] = room3
     
-    let configFileName = "test"
+    let configFileName = "game"
     let configFileExtension = "json"
     
     if let configDataString = game.readConfigFile(fileName: configFileName, fileExtention: configFileExtension) {
