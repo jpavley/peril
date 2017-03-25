@@ -8,13 +8,13 @@
 
 import Foundation
 
-func readConfigFile(fileName: String, fileExtention: String) -> String? {
+func readConfigDesktop(fileName: String, fileExtention: String) -> String? {
     var result = ""
     let dir = try? FileManager.default.url(for: .desktopDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     if let fileURL = dir?.appendingPathComponent(fileName).appendingPathExtension(fileExtention) {
         do {
             result = try String(contentsOf: fileURL)
-            print("Succeeded reading from URL: \(fileURL)")
+            //print("Succeeded reading from URL: \(fileURL)")
             return result
         } catch {
             print("Failed reading from URL: \(fileURL), Error: " + error.localizedDescription)
@@ -32,7 +32,7 @@ func main() {
     let configFileName = "game"
     let configFileExtension = "json"
     
-    if let configFileString = readConfigFile(fileName: configFileName, fileExtention: configFileExtension) {
+    if let configFileString = readConfigDesktop(fileName: configFileName, fileExtention: configFileExtension) {
         let jsonString = configFileString.data(using: .utf8)!
         if let actualJSON = try? JSONSerialization.jsonObject(with: jsonString) as! [String:Any],
             let game = Game(json: actualJSON) {
