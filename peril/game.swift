@@ -17,31 +17,33 @@ class Game {
     var commands: [String:Command] = [:]
     var gameOver = false
     
-    // game info from game.jason
-    var name = "The Peril"
-    var welcome = "Welcome to the Peril. Enter at your own risk..."
-    var prompt = "Enter a command:"
-    var errorBadCommand = "Please restate the command."
-    var errorBadPickup = "You can't pick that up."
+    // game info default answers
+    var name = "Untitled"
+    var welcome = "Welcome to the Untitled."
+    var prompt = "> "
+    var errorBadCommand = "? "
+    var errorBadPickup = "Error. "
+
     
     // Apple's suggestion way of JSON initialization
-//    init?(json: [String: Any]) {
-//        guard let gameInfoJSON = json["game-info"] as? [String:String],
-//            let name = gameInfoJSON["name"],
-//            let welcome = gameInfoJSON["welcome"],
-//            let prompt = gameInfoJSON["prompt"],
-//            let errorBadCommand = gameInfoJSON["error-bad-command"],
-//            let errorBadPickup = gameInfoJSON["error-bad-pickup"]
-//            else {
-//                return nil
-//        }
-//        
-//        self.name = name
-//        self.welcome = welcome
-//        self.prompt = prompt
-//        self.errorBadCommand = errorBadCommand
-//        self.errorBadPickup = errorBadPickup
-//    }
+    init?(json: [String: Any]) {
+        guard let gameInfoJSON = json["game-info"] as? [String:String],
+            let name = gameInfoJSON["name"],
+            let welcome = gameInfoJSON["welcome"],
+            let prompt = gameInfoJSON["prompt"],
+            let errorBadCommand = gameInfoJSON["error-bad-command"],
+            let errorBadPickup = gameInfoJSON["error-bad-pickup"]
+            else {
+                print("unable to read game config info thus game not created.")
+                return nil
+        }
+        
+        self.name = name
+        self.welcome = welcome
+        self.prompt = prompt
+        self.errorBadCommand = errorBadCommand
+        self.errorBadPickup = errorBadPickup
+    }
         
     func describeLocation() -> String? {
         return world[player.location]?.node.description
