@@ -67,8 +67,8 @@
 			isa = PBXGroup;
 			children = (
 				B8EBBC861E7D5F9F00E893E7 /* data-structures.swift */,
-				B8EBBC881E7D607200E893E7 /* game.swift */,
 				5A3AB4A31E34312000FD15AB /* main.swift */,
+				B8EBBC881E7D607200E893E7 /* game.swift */,
 				5A92EFBC1E86BD74009CE719 /* game.json */,
 			);
 			path = peril;

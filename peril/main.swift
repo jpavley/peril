@@ -24,6 +24,22 @@ func readConfigDesktop(fileName: String, fileExtention: String) -> String? {
     return nil
 }
 
+func readConfigBundle(fileName: String, fileExtention: String) -> String? {
+    if let dir = Bundle.main.url(forResource: "game", withExtension: "json") {
+        do {
+            let result = try String(contentsOf: dir)
+            print(result)
+            return result
+        } catch {
+            print("Failed reading from URL: \(dir), Error: " + error.localizedDescription)
+            return nil
+
+        }
+    }
+    print("Failed reading from Bundle.")
+    return nil
+}
+
 
 // main
 
@@ -32,7 +48,8 @@ func main() {
     let configFileName = "game"
     let configFileExtension = "json"
     
-    if let configFileString = readConfigDesktop(fileName: configFileName, fileExtention: configFileExtension) {
+    //if let configFileString = readConfigDesktop(fileName: configFileName, fileExtention: configFileExtension) {
+    if let configFileString = readConfigBundle(fileName: configFileName, fileExtention: configFileExtension) {
         let jsonString = configFileString.data(using: .utf8)!
         if let actualJSON = try? JSONSerialization.jsonObject(with: jsonString) as! [String:Any],
             let game = Game(json: actualJSON) {
