@@ -10,8 +10,8 @@ import Foundation
 
 func readConfigFile(fileName: String, fileExtention: String) -> String? {
     var result = ""
-    let docDirectory = try? FileManager.default.url(for: .desktopDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-    if let fileURL = docDirectory?.appendingPathComponent(fileName).appendingPathExtension(fileExtention) {
+    let dir = try? FileManager.default.url(for: .desktopDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+    if let fileURL = dir?.appendingPathComponent(fileName).appendingPathExtension(fileExtention) {
         do {
             result = try String(contentsOf: fileURL)
             print("Succeeded reading from URL: \(fileURL)")
